@@ -1,9 +1,10 @@
-#![cfg(feature = "std")]
+#![cfg(feature = "alloc")]
 
 // cargo expand --verbose --test macro_impl_partial_eq_str_for_display
 
+extern crate alloc;
+
 use core::fmt;
-use std::borrow::Cow;
 
 //
 #[derive(Debug)]
@@ -17,8 +18,9 @@ impl fmt::Display for Foo {
 
 impl_macros::impl_partial_eq_str_for_display!(str, Foo);
 impl_macros::impl_partial_eq_str_for_display!(&'a str, Foo);
-impl_macros::impl_partial_eq_str_for_display!(String, Foo);
-impl_macros::impl_partial_eq_str_for_display!(Cow<'a, str>, Foo);
+impl_macros::impl_partial_eq_str_for_display!(alloc::string::String, Foo);
+#[cfg(feature = "std")]
+impl_macros::impl_partial_eq_str_for_display!(std::borrow::Cow<'a, str>, Foo);
 
 #[cfg(test)]
 mod tests {
@@ -27,7 +29,8 @@ mod tests {
     #[test]
     fn test_partial_eq() {
         assert_eq!(Foo, "foo");
-        assert_eq!(Foo, "foo".to_string());
-        assert_eq!(Foo, Cow::Borrowed("foo"));
+        assert_eq!(Foo, alloc::string::String::from("foo"));
+        #[cfg(feature = "std")]
+        assert_eq!(Foo, std::borrow::Cow::Borrowed("foo"));
     }
 }
