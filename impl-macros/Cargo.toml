@@ -1,0 +1,22 @@
+[package]
+name = "impl-macros"
+version = "0.1.0"
+authors = ["vkill <vkill.net@gmail.com>"]
+edition = "2021"
+description = "impl macros"
+license = "Apache-2.0 OR MIT"
+repository = "https://github.com/bk-rs/std-utils"
+homepage = "https://github.com/bk-rs/std-utils"
+documentation = "https://docs.rs/impl-macros"
+keywords = []
+categories = []
+readme = "README.md"
+
+[package.metadata.docs.rs]
+all-features = true
+
+[features]
+default = ["std"]
+std = []
+
+[dependencies]
