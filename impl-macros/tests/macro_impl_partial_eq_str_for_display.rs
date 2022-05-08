@@ -1,6 +1,6 @@
 #![cfg(feature = "alloc")]
 
-// cargo expand --verbose --test macro_impl_partial_eq_str_for_display
+// cargo expand -p impl-macros --verbose --test macro_impl_partial_eq_str_for_display
 
 extern crate alloc;
 
