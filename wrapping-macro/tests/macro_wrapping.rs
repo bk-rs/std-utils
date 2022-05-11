@@ -11,7 +11,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_wrapping() {
+    fn test_methods_and_impl() {
         let w = U64Wrapper::from_inner(1);
         assert_eq!(w.inner(), &1);
         assert_eq!(w.into_inner(), 1);
