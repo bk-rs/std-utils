@@ -1,13 +1,18 @@
-// cargo expand -p error-macro --verbose --test macro_tuple_struct
+// cargo expand -p error-macro --verbose --test macro_struct
 
 //
-error_macro::tuple_struct! {
-    pub struct FooError(u64);
+error_macro::r#struct! {
+    pub struct FooError {
+        pub code: u64
+    }
 }
 
-error_macro::tuple_struct! {
+error_macro::r#struct! {
     #[derive(Clone)]
-    pub struct BarError(pub u64, pub Box<str>);
+    pub struct BarError {
+        pub code: u64,
+        pub desc: Box<str>,
+    }
 }
 
 #[cfg(feature = "std")]
@@ -23,6 +28,6 @@ mod tests {
             assert!(err.downcast_ref::<FooError>().is_some());
         }
 
-        foo(FooError(0).into());
+        foo(FooError { code: 0 }.into());
     }
 }

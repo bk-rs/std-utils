@@ -1,13 +1,17 @@
 //
 #[macro_export]
-macro_rules! tuple_struct {
+macro_rules! r#struct {
     (
         $( #[$meta:meta] )*
-        $pub:vis struct $name:ident($( $inner_pub:vis $inner_ty:ty ),* $(,)? );
+        $pub:vis struct $name:ident {
+            $( $field_pub:vis $field_name:ident: $field_ty:ty ),* $(,)?
+        }
     ) => {
         $( #[$meta] )*
         #[derive(Debug)]
-        $pub struct $name($( $inner_pub $inner_ty ),*);
+        $pub struct $name {
+            $( $field_pub $field_name: $field_ty ),*
+        }
 
         impl ::core::fmt::Display for $name {
             fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {

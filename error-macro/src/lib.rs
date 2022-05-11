@@ -4,5 +4,6 @@
 pub extern crate alloc;
 
 //
+mod r#struct;
 mod tuple_struct;
 mod unit_struct;
