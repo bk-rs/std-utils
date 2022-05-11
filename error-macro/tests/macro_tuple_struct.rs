@@ -1,3 +1,5 @@
+#![cfg(feature = "std")]
+
 // cargo expand -p error-macro --verbose --test macro_tuple_struct
 
 //
@@ -10,7 +12,6 @@ error_macro::tuple_struct! {
     pub struct BarError(pub u64, pub Box<str>);
 }
 
-#[cfg(feature = "std")]
 #[cfg(test)]
 mod tests {
     use super::*;

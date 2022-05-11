@@ -1,3 +1,5 @@
+#![cfg(feature = "std")]
+
 // cargo expand -p error-macro --verbose --test macro_unit_struct
 
 //
@@ -10,7 +12,6 @@ error_macro::unit_struct! {
     pub struct BarError;
 }
 
-#[cfg(feature = "std")]
 #[cfg(test)]
 mod tests {
     use super::*;
