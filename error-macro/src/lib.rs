@@ -4,4 +4,5 @@
 pub extern crate alloc;
 
 //
+mod r#enum;
 mod r#struct;

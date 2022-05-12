@@ -1,23 +1,6 @@
-#![cfg(not(feature = "std"))]
+#![cfg(feature = "std")]
 
-// cargo expand -p error-macro --no-default-features  --verbose --test no_std
-
-//
-error_macro::r#struct! {
-    pub struct CLikeStructError {
-        pub code: u64
-    }
-}
-
-//
-error_macro::r#struct! {
-    pub struct TupleStructError(u64);
-}
-
-//
-error_macro::r#struct! {
-    pub struct UnitStructError;
-}
+// cargo expand -p error-macro --verbose --test macro_enum
 
 //
 error_macro::r#enum! {
@@ -50,5 +33,27 @@ error_macro::r#enum! {
         Paste(String),
         // or c-like structures.
         Click { x: i64, y: i64 },
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_impl_std_error() {
+        use std::error::Error;
+
+        //
+        fn day(err: Box<dyn Error>) {
+            assert!(err.downcast_ref::<Day>().is_some());
+        }
+        day(Day::Monday.into());
+
+        //
+        fn flash_message(err: Box<dyn Error>) {
+            assert!(err.downcast_ref::<FlashMessage>().is_some());
+        }
+        flash_message(FlashMessage::Error("".into()).into());
     }
 }
