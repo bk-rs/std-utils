@@ -10,11 +10,11 @@ error_macro::r#struct! {
 }
 
 //
-error_macro::tuple_struct! {
+error_macro::r#struct! {
     pub struct TupleStructError(u64);
 }
 
 //
-error_macro::unit_struct! {
+error_macro::r#struct! {
     pub struct UnitStructError;
 }
