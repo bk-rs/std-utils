@@ -1,5 +1,3 @@
-#![allow(unknown_lints)]
-#![allow(clippy::uninlined_format_args)] // Added in 1.65.0
 #![cfg(feature = "std")]
 
 // cargo expand -p wrapping-macro --verbose --test macro_wrapping_string
@@ -25,6 +23,6 @@ mod tests {
 
         // Display and FromStr
         let w = "foo".parse::<StringWrapper>().unwrap();
-        assert_eq!(format!("{}", w), "foo");
+        assert_eq!(format!("{w}"), "foo");
     }
 }
