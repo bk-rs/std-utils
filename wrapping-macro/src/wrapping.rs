@@ -93,3 +93,109 @@ macro_rules! wrapping_string {
         }
     }
 }
+
+//
+#[cfg(feature = "alloc")]
+#[macro_export]
+macro_rules! wrapping_box_str {
+    (
+        $( #[$meta:meta] )*
+        $pub:vis struct $name:ident($inner_pub:vis $inner_ty:ty);
+    ) => {
+        wrapping_macro::wrapping!{
+            $( #[$meta] )*
+            $pub struct $name($inner_pub $inner_ty);
+        }
+
+        impl ::core::convert::From<$crate::alloc::string::String> for $name {
+            fn from(v: $crate::alloc::string::String) -> Self {
+                Self(v.as_str().into())
+            }
+        }
+        impl ::core::convert::From<&$crate::alloc::string::String> for $name {
+            fn from(v: &$crate::alloc::string::String) -> Self {
+                Self(v.as_str().into())
+            }
+        }
+        impl ::core::convert::From<&::core::primitive::str> for $name {
+            fn from(v: &::core::primitive::str) -> Self {
+                Self(v.into())
+            }
+        }
+        impl ::core::convert::From<&$crate::alloc::boxed::Box<::core::primitive::str>> for $name {
+            fn from(v: &$crate::alloc::boxed::Box<::core::primitive::str>) -> Self {
+                Self(v.to_owned())
+            }
+        }
+
+        impl ::core::fmt::Display for $name {
+            fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+                write!(f, "{}", self.0)
+            }
+        }
+
+        impl ::core::str::FromStr for $name {
+            type Err = ::core::convert::Infallible;
+
+            fn from_str(s: &::core::primitive::str) -> Result<Self, Self::Err> {
+                Ok(Self(s.into()))
+            }
+        }
+    }
+}
+
+//
+#[macro_export]
+macro_rules! wrapping_int {
+    (
+        $( #[$meta:meta] )*
+        $pub:vis struct $name:ident($inner_pub:vis $inner_ty:ty);
+    ) => {
+        wrapping_macro::wrapping!{
+            $( #[$meta] )*
+            $pub struct $name($inner_pub $inner_ty);
+        }
+
+        impl ::core::fmt::Display for $name {
+            fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+                write!(f, "{}", self.0)
+            }
+        }
+
+        impl ::core::str::FromStr for $name {
+            type Err = ::core::num::ParseIntError;
+
+            fn from_str(s: &::core::primitive::str) -> Result<Self, Self::Err> {
+                s.parse::<$inner_ty>().map(Into::into)
+            }
+        }
+    }
+}
+
+//
+#[macro_export]
+macro_rules! wrapping_float {
+    (
+        $( #[$meta:meta] )*
+        $pub:vis struct $name:ident($inner_pub:vis $inner_ty:ty);
+    ) => {
+        wrapping_macro::wrapping!{
+            $( #[$meta] )*
+            $pub struct $name($inner_pub $inner_ty);
+        }
+
+        impl ::core::fmt::Display for $name {
+            fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+                write!(f, "{}", self.0)
+            }
+        }
+
+        impl ::core::str::FromStr for $name {
+            type Err = ::core::num::ParseFloatError;
+
+            fn from_str(s: &::core::primitive::str) -> Result<Self, Self::Err> {
+                s.parse::<$inner_ty>().map(Into::into)
+            }
+        }
+    }
+}

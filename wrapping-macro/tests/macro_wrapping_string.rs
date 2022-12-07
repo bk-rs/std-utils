@@ -8,6 +8,11 @@ wrapping_macro::wrapping_string! {
     pub struct StringWrapper(pub String);
 }
 
+wrapping_macro::wrapping_box_str! {
+    #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+    pub struct BoxStrWrapper(pub Box<str>);
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -21,8 +26,17 @@ mod tests {
         let _ = StringWrapper::from(Box::<str>::from("foo"));
         let _ = StringWrapper::from(&Box::<str>::from("foo"));
 
+        let _ = BoxStrWrapper::from(String::from("foo"));
+        let _ = BoxStrWrapper::from(&String::from("foo"));
+        let _ = BoxStrWrapper::from("foo");
+        let _ = BoxStrWrapper::from(Box::<str>::from("foo"));
+        let _ = BoxStrWrapper::from(&Box::<str>::from("foo"));
+
         // Display and FromStr
         let w = "foo".parse::<StringWrapper>().unwrap();
+        assert_eq!(format!("{w}"), "foo");
+
+        let w = "foo".parse::<BoxStrWrapper>().unwrap();
         assert_eq!(format!("{w}"), "foo");
     }
 }
