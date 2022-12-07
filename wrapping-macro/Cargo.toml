@@ -11,6 +11,7 @@ documentation = "https://docs.rs/wrapping-macro"
 keywords = []
 categories = []
 readme = "README.md"
+rust-version = "1.58.0"
 
 [package.metadata.docs.rs]
 all-features = true
