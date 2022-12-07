@@ -2,7 +2,7 @@
 
 //
 wrapping_macro::wrapping! {
-    #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub struct U64Wrapper(u64);
 }
 
