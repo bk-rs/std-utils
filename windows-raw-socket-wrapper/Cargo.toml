@@ -1,0 +1,15 @@
+[package]
+name = "windows-raw-socket-wrapper"
+version = "0.1.0"
+authors = ["vkill <vkill.net@gmail.com>"]
+edition = "2021"
+description = "Windows RawSocketWrapper"
+license = "Apache-2.0 OR MIT"
+repository = "https://github.com/bk-rs/std-utils"
+homepage = "https://github.com/bk-rs/std-utils"
+documentation = "https://docs.rs/windows-raw-socket-wrapper"
+keywords = []
+categories = []
+readme = "README.md"
+
+[dependencies]
